@@ -9,12 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      # Palette data + schema live in their own repo; CI uses a checkout.
+      - uses: actions/checkout@v4
+        with:
+          repository: equisdots/palettes
+          path: palettes
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-
-      - name: Validate palettes
-        run: python3 tools/validate_palettes.py
 
       - name: Compile package
         run: python3 -m compileall -q themesync

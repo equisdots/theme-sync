@@ -8,7 +8,8 @@ aborts the rest.
 ## How it works
 
 1. Palettes are plain JSON files: base16 (`color0`..`color15`) + `background`/
-   `foreground` + optional `roles` overrides. See `palettes/schema.json`.
+   `foreground` + optional `roles` overrides. The data and its schema live in
+   [equisdots/palettes](https://github.com/equisdots/palettes).
 2. The active palette slug comes from `settings.json` → `dock.palette`
    (fallback `x`).
 3. Each target under `themesync/targets/` regenerates its application's config:
@@ -48,7 +49,8 @@ Defaults target the xscriptor desktop layout:
 
 ## Palette format
 
-Minimal example (see `palettes/schema.json` for the full contract):
+Minimal example (see the [palettes schema](https://github.com/equisdots/palettes)
+for the full contract):
 
 ```json
 {
@@ -63,7 +65,8 @@ Minimal example (see `palettes/schema.json` for the full contract):
 ```
 
 `x` is special: it is the fallback palette (used when the active palette file is
-missing), so it must always exist. `palettes/index.json` is the ordered list the
+missing), so it must always exist. `index.json` in the
+[palettes repo](https://github.com/equisdots/palettes) is the ordered list the
 desktop panel shows.
 
 ## Adding a target
@@ -86,10 +89,13 @@ and add it to the registry in `themesync/targets/__init__.py`.
 ## Development
 
 ```bash
-python3 tools/validate_palettes.py   # validate palettes/ against the schema
 python3 -m compileall -q themesync   # syntax check
 ./theme-sync.sh --dry-run            # exercise every target without writing
 ```
+
+Palette validation lives with the data:
+[equisdots/palettes](https://github.com/equisdots/palettes) →
+`python3 tools/validate_palettes.py`.
 
 ## License
 
