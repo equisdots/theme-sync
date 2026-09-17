@@ -25,7 +25,7 @@ aborts the rest.
 ./theme-sync.sh --palettes DIR --settings FILE
 ```
 
-Defaults target the xscriptor desktop layout:
+Defaults target the equisdots desktop layout:
 
 - palettes: `~/.config/hypr/scripts/quickshell/dock/palettes`
 - settings: `~/.config/hypr/settings.json`
