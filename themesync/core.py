@@ -93,7 +93,9 @@ def load_palettes(palettes_dir: Path) -> list:
     schema.json = format contract): only files with palette data count.
     """
     out = []
-    for pf in sorted(Path(palettes_dir).glob("*.json")):
+    # rglob: palettes may live in subfolders (e.g. community/), which the panel
+    # lists through index.json "path" entries.
+    for pf in sorted(Path(palettes_dir).rglob("*.json")):
         if pf.name in METADATA_FILES:
             continue
         pal = load_json(pf)
