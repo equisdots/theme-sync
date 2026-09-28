@@ -88,7 +88,10 @@ and add it to the registry in `themesync/targets/__init__.py`.
 
 ## Development
 
+No CI: run the local checks before pushing.
+
 ```bash
+scripts/check.sh                     # compileall + CLI smoke test (list/dry-run)
 python3 -m compileall -q themesync   # syntax check
 ./theme-sync.sh --dry-run            # exercise every target without writing
 ```
