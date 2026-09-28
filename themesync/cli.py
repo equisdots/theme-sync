@@ -34,7 +34,8 @@ def build_env(args) -> Env:
     if palette is None:
         # The active palette may be missing from the directory (e.g. deleted):
         # try loading its file directly; otherwise it stays empty.
-        palette = load_json(palettes_dir / (slug + ".json"), {}) or {}
+        palette = load_json(palettes_dir / (slug + ".json"), {}) or \
+            load_json(palettes_dir / "community" / (slug + ".json"), {}) or {}
 
     return Env(home=home, palettes_dir=palettes_dir, settings_path=settings_path,
                slug=slug, palettes=palettes, palette=palette, dry_run=args.dry_run)
