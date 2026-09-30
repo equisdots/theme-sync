@@ -37,7 +37,7 @@ Defaults target the equisdots desktop layout:
 | `kitty` | `~/.config/kitty/themes/<slug>.conf` + include and active border in `kitty.conf` |
 | `starship` | per-palette themes + fixed `~/.config/starship.toml` + `STARSHIP_CONFIG` in `.zshrc`/`.bashrc` |
 | `xtop` | `~/.config/xtop/themes/<slug>.jsonc` + active theme (`xtop --ct`) |
-| `vscode` | `workbench.colorTheme` / `workbench.iconTheme` in Code / Code - Insiders |
+| `vscode` | `workbench.colorTheme` / `workbench.iconTheme` for palettes bundled in the xscriptor-themes extension; any other palette (community/, user-created) gets an intelligent live tint via generated `colorCustomizations` + token/semantic colors, in Code / Code - Insiders |
 | `nvim` | `lua/themes/palettes.lua` + active-theme bootstrap |
 | `browsers` | Brave/Beta prefs (`color_scheme2`, accent) + Firefox `user.js` |
 | `opencode` | `~/.config/opencode/themes/<slug>.json` + active theme in `tui.json` |
