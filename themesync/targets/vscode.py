@@ -57,8 +57,20 @@ _MANAGED_KEYS = (
 
 
 def available(env) -> bool:
-    # Always: if no variant is installed, apply() does nothing.
+    # Always: apply() decides per variant whether the editor is installed.
     return True
+
+
+def _variant_present(env, rel: str, vendor: str) -> bool:
+    """Is this editor variant installed (settings file, user dir or binary)?"""
+    path = Path(env.home) / rel
+    if path.is_file() or path.parent.is_dir():
+        return True
+    ext = Path(env.home) / EXT_DIRS.get(vendor, "")
+    if ext.is_dir():
+        return True
+    binary = "code-insiders" if vendor == "Code - Insiders" else "code"
+    return env.binary(binary) is not None
 
 
 # ── native theme discovery (dynamic; no palette list) ─────────────────────────
@@ -172,11 +184,12 @@ def apply(env) -> list:
     out = []
     for rel in VARIANTS:
         path = env.home / rel
-        if not path.is_file():
-            continue
         vendor = Path(rel).parent.parent.name  # "Code" / "Code - Insiders"
-        original = path.read_text(encoding="utf-8", errors="replace")
-        text = _strip_block(original)
+        if not _variant_present(env, rel, vendor):
+            continue
+        created = not path.is_file()
+        original = "" if created else path.read_text(encoding="utf-8", errors="replace")
+        text = "{\n}\n" if not original.strip() else _strip_block(original)
 
         display = _native(env, env.slug, vendor)
         icon = _icon(env, env.slug, vendor)
@@ -214,7 +227,8 @@ def apply(env) -> list:
                 "; skipped user keys: %s" % ", ".join(skipped) if skipped else "",
             )
 
-        if text != original:
+        if created or text != original:
             env.write(path, text)
-        out.append("vscode (%s) → %s" % (vendor, note))
+        suffix = " [created]" if created else ""
+        out.append("vscode (%s) → %s%s" % (vendor, note, suffix))
     return out
