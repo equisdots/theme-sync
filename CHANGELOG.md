@@ -3,6 +3,17 @@
 All notable changes to the equisdots theme-sync engine are documented here.
 Dates use YYYY-MM-DD.
 
+## [2026-10-25]
+
+### Fixed
+- VS Code target: process an installed Code / Code - Insiders variant even when
+  its `User/settings.json` does not exist yet (fresh profile). The file is
+  created with the generated theme instead of the target silently doing
+  nothing. This was why VSCode stayed unthemed on a fresh niri profile while
+  working where the file already existed.
+- `scripts/check.sh`: temp-home fixture that asserts the missing settings file
+  is created and contains the managed theme block.
+
 ## [2026-09-30]
 
 ### Added

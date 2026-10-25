@@ -74,6 +74,39 @@ PY
         echo "vscode mapping FAIL"
         fail=1
     fi
+
+    # vscode fresh-profile: an installed variant with no settings.json must be
+    # created and themed instead of silently skipped.
+    tmp_home="$(mktemp -d)"
+    mkdir -p "$tmp_home/.config/Code - Insiders/User"
+    if ! PYTHONPATH="$PWD" python3 - "$PALETTES" "$tmp_home" <<'PY'
+import sys
+from pathlib import Path
+from themesync.core import Env, load_palettes
+from themesync.targets import vscode
+
+home = Path(sys.argv[2])
+pals = load_palettes(Path(sys.argv[1]))
+pal = pals[0]
+env = Env(home=home, palettes_dir=Path(sys.argv[1]),
+          settings_path=home / ".config/hypr/settings.json",
+          slug=pal.get("slug"), palettes=pals, palette=pal)
+vscode.apply(env)
+path = home / ".config/Code - Insiders/User/settings.json"
+if not path.is_file():
+    print("vscode create: settings.json missing")
+    sys.exit(1)
+text = path.read_text()
+if '"workbench.colorTheme"' not in text or "equisdots theme-sync" not in text:
+    print("vscode create: theme block missing")
+    sys.exit(1)
+print("vscode create: OK")
+PY
+    then
+        echo "vscode create FAIL"
+        fail=1
+    fi
+    rm -rf "$tmp_home"
 else
     echo "note: no palette source found, CLI smoke test skipped" >&2
 fi
