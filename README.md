@@ -86,14 +86,28 @@ def apply(env) -> list:
 
 and add it to the registry in `themesync/targets/__init__.py`.
 
-## Development
+## Testing
 
-No CI: run the local checks before pushing.
+There is no CI. The local gate is:
 
 ```bash
-scripts/check.sh                     # compileall + CLI smoke test (list/dry-run)
-python3 -m compileall -q themesync   # syntax check
-./theme-sync.sh --dry-run            # exercise every target without writing
+scripts/check.sh
+```
+
+It runs:
+
+- `python3 -m compileall -q themesync`.
+- `python3 -m unittest discover -s tests -t .` (104 tests: colour maths,
+  palette loading and selection, atomic writes, block stripping, binary lookup,
+  `Env` helpers, and the runner's availability, selection, failure isolation
+  and listing contracts).
+- the CLI smoke test (`--list` and `--dry-run`).
+- the VS Code mapping over every palette, including the fresh-profile path.
+
+The unit suite can also be run directly:
+
+```bash
+python3 -m unittest discover -s tests -t . -v
 ```
 
 Palette validation lives with the data:
