@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Local checks for the theme-sync engine (no CI):
 #   - Byte-compile the package.
+#   - Unit tests for themesync/core.py (stdlib unittest).
 #   - CLI smoke test (list + dry-run) against a local palette checkout.
 #
 # Palette source resolution: sibling ../palettes checkout first, then the
@@ -17,6 +18,13 @@ if ! python3 -m compileall -q themesync; then
     fail=1
 else
     echo "compileall: OK"
+fi
+
+if ! python3 -m unittest discover -s tests -t .; then
+    echo "unit tests FAIL"
+    fail=1
+else
+    echo "unit tests: OK"
 fi
 
 PALETTES=""

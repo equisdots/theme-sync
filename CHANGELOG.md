@@ -3,6 +3,11 @@
 All notable changes to the equisdots theme-sync engine are documented here.
 Dates use YYYY-MM-DD.
 
+## [2026-11-01]
+
+### Added
+- **Local unit tests**: a stdlib `unittest` suite under `tests/` (88 tests) covering the colour maths, palette loading/selection, atomic writes, block stripping, binary lookup and the `Env` helpers. `scripts/check.sh` runs it before the CLI/VS Code smoke checks; no CI and no new dependencies.
+
 ## [2026-10-25]
 
 ### Fixed
