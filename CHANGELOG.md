@@ -6,7 +6,10 @@ Dates use YYYY-MM-DD.
 ## [2026-11-01]
 
 ### Added
-- **Local unit tests**: a stdlib `unittest` suite under `tests/` (88 tests) covering the colour maths, palette loading/selection, atomic writes, block stripping, binary lookup and the `Env` helpers. `scripts/check.sh` runs it before the CLI/VS Code smoke checks; no CI and no new dependencies.
+- **Local unit tests**: a stdlib `unittest` suite under `tests/` (104 tests) covering the colour maths, palette loading/selection, atomic writes, block stripping, binary lookup, the `Env` helpers and the runner's availability, selection, failure isolation and listing contracts. `scripts/check.sh` runs it before the CLI/VS Code smoke checks; no CI and no new dependencies.
+
+### Documentation
+- **Testing section**: the README documents `scripts/check.sh`, the 104 unittest cases, the CLI smoke test and the VS Code mapping/fresh-profile checks.
 
 ## [2026-10-25]
 
