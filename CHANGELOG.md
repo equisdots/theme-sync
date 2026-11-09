@@ -3,6 +3,20 @@
 All notable changes to the equisdots theme-sync engine are documented here.
 Dates use YYYY-MM-DD.
 
+## [2026-11-09]
+
+### Fixed
+- **opencode**: the target required `~/.config/opencode/themes/` to already
+  exist and only updated `tui.json` when it was there, so a fresh profile
+  skipped the target entirely and never got an active theme. It now checks the
+  opencode config dir, creates `themes/` and creates `tui.json` (with
+  `$schema`) or preserves its existing keys. When opencode v2's `cli.json`
+  already exists, its `theme` object is kept in sync too.
+- **xtop**: same availability bug — it required `themes/` to exist and skipped
+  fresh installs. It now checks `~/.config/xtop` and creates `themes/`.
+- Added unit tests for both targets (fresh profile, key preservation, v2
+  `cli.json` sync, activation guard).
+
 ## [2026-11-01]
 
 ### Added

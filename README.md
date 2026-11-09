@@ -40,7 +40,7 @@ Defaults target the equisdots desktop layout:
 | `vscode` | `workbench.colorTheme` / `workbench.iconTheme` for palettes bundled in the xscriptor-themes extension; any other palette (community/, user-created) gets an intelligent live tint via generated `colorCustomizations` + token/semantic colors, in Code / Code - Insiders. Creates `User/settings.json` when the editor is installed but the file is missing (fresh profile). |
 | `nvim` | `lua/themes/palettes.lua` + active-theme bootstrap |
 | `browsers` | Brave/Beta prefs (`color_scheme2`, accent) + Firefox `user.js` |
-| `opencode` | `~/.config/opencode/themes/<slug>.json` + active theme in `tui.json` |
+| `opencode` | `~/.config/opencode/themes/<slug>.json` + active theme in `tui.json` (created when missing; `cli.json` updated when it exists) |
 | `rofi` | `colors.rasi` + `config.rasi` (dmenu included) |
 | `cava` | managed `[color]` block with a palette gradient |
 | `qt` | qt6ct/qt5ct color schemes + active config |
