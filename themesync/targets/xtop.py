@@ -17,17 +17,21 @@ NAME = "xtop"
 DESCRIPTION = "per-palette themes + active theme (xtop --ct)"
 
 THEMES_REL = ".config/xtop/themes"
+CONFIG_REL = ".config/xtop"
 HEADER_MARK = "synced from dock/palettes/"
 
 
 def available(env) -> bool:
-    return (env.home / THEMES_REL).is_dir()
+    # Check the config dir, not themes/: on a fresh xtop install the themes
+    # directory does not exist yet and the target used to skip itself.
+    return (env.home / CONFIG_REL).is_dir()
 
 
 def apply(env) -> list:
     out = []
     themes = env.home / THEMES_REL
     env.copytree_once(themes, str(themes) + ".bak")
+    env.mkdir(themes)
 
     # ── 1) Regenerate per-palette themes ──
     slugs = []
