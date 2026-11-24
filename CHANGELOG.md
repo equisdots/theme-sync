@@ -3,6 +3,24 @@
 All notable changes to the equisdots theme-sync engine are documented here.
 Dates use YYYY-MM-DD.
 
+## [2026-11-24]
+
+### Added
+- **zen**: new target for Zen Browser. Writes `chrome/equisdots.css` with the
+  palette (accent, browser/toolbar background, urlbar, borders, selected tab,
+  popups), inserts a managed `@import` at the top of `chrome/userChrome.css`
+  (preserving user rules and `@charset`), and manages `user.js` prefs:
+  `zen.view.window.scheme` (0 dark / 1 light), `zen.theme.accent-color`,
+  `zen.theme.use-system-colors=false`,
+  `layout.css.prefers-color-scheme.content-override` and
+  `toolkit.legacyUserProfileCustomizations.stylesheets=true`. Profiles are
+  discovered from modern XDG (`~/.config/zen`), tarball/Twilight (`~/.zen`) and
+  Flatpak roots via `profiles.ini` (fallback `*/prefs.js`); stub profile-group
+  entries without `prefs.js` and fresh installs are skipped. A running Zen is
+  reported: userChrome.css/user.js are read at startup, so the palette applies
+  after restart. 16 unit tests cover discovery, light/dark, import
+  preservation, managed-block replacement, no-profile and dry-run paths.
+
 ## [2026-11-09]
 
 ### Fixed
