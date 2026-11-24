@@ -14,7 +14,7 @@ aborts the rest.
    (fallback `x`).
 3. Each target under `themesync/targets/` regenerates its application's config:
    per-palette artifacts (kitty, starship, xtop, nvim, opencode, Qt, xfetch) or
-   active-only config (VS Code, browsers, rofi, cava, GTK).
+   active-only config (VS Code, browsers, Zen, rofi, cava, GTK).
 
 ## Usage
 
@@ -40,12 +40,24 @@ Defaults target the equisdots desktop layout:
 | `vscode` | `workbench.colorTheme` / `workbench.iconTheme` for palettes bundled in the xscriptor-themes extension; any other palette (community/, user-created) gets an intelligent live tint via generated `colorCustomizations` + token/semantic colors, in Code / Code - Insiders. Creates `User/settings.json` when the editor is installed but the file is missing (fresh profile). |
 | `nvim` | `lua/themes/palettes.lua` + active-theme bootstrap |
 | `browsers` | Brave/Beta prefs (`color_scheme2`, accent) + Firefox `user.js` |
+| `zen` | Zen Browser: `chrome/equisdots.css` (accent, toolbar/browser background, urlbar, borders, tabs) + managed `@import` in `chrome/userChrome.css` + `user.js` (`zen.view.window.scheme`, `zen.theme.accent-color`, legacy userChrome pref). Profiles are read from `~/.config/zen`, `~/.zen` and the Flatpak roots. Changes apply on the next launch (`Restart` in Zen). |
 | `opencode` | `~/.config/opencode/themes/<slug>.json` + active theme in `tui.json` (created when missing; `cli.json` updated when it exists) |
 | `rofi` | `colors.rasi` + `config.rasi` (dmenu included) |
 | `cava` | managed `[color]` block with a palette gradient |
 | `qt` | qt6ct/qt5ct color schemes + active config |
 | `gtk` | `gtk-3.0`/`gtk-4.0` `gtk.css` overrides + system color-scheme |
 | `xfetch` | `~/.config/xfetch/themes/<slug>.jsonc` (hex) + active theme |
+
+### Zen Browser
+
+Zen is Firefox-based, but its chrome ignores `browser.theme.*`: the palette is
+applied as user-origin CSS variables in `chrome/equisdots.css` (imported once
+from `userChrome.css`) and the scheme/accent prefs go to `user.js`
+(`zen.view.window.scheme`, `zen.theme.accent-color`,
+`layout.css.prefers-color-scheme.content-override`). Zen Mods and the workspace
+gradient picker are left untouched; the generated `!important` variables win
+over Zen's inline theme. Both files are read at startup, so a running browser
+keeps the previous palette until restarted (`Restart` in Zen).
 
 ## Palette format
 
@@ -97,7 +109,7 @@ scripts/check.sh
 It runs:
 
 - `python3 -m compileall -q themesync`.
-- `python3 -m unittest discover -s tests -t .` (104 tests: colour maths,
+- `python3 -m unittest discover -s tests -t .` (120 tests: colour maths,
   palette loading and selection, atomic writes, block stripping, binary lookup,
   `Env` helpers, and the runner's availability, selection, failure isolation
   and listing contracts).

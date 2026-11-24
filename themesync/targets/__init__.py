@@ -24,9 +24,10 @@ from . import (
     vscode,
     xfetch,
     xtop,
+    zen,
 )
 
-TARGETS = [kitty, starship, xtop, vscode, nvim, browsers,
+TARGETS = [kitty, starship, xtop, vscode, nvim, browsers, zen,
            opencode, rofi, cava, qt, gtk, xfetch]
 
 BY_NAME = {t.NAME: t for t in TARGETS}
